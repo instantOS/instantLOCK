@@ -6,6 +6,8 @@
 .Sh SYNOPSIS
 .Nm
 .Op Fl v
+.Op Fl f
+.Op Fl m Ar message
 .Op Ar cmd Op Ar arg ...
 .Sh DESCRIPTION
 .Nm
@@ -17,6 +19,11 @@ is executed after the screen has been locked.
 .It Fl v
 Print version information to stdout and exit.
 .El
+.It Fl f
+List all valid X fonts and exit.
+.It Fl m Ar message
+Overrides default slock lock message.
+.TP
 .Sh SECURITY CONSIDERATIONS
 To make sure a locked screen can not be bypassed by switching VTs
 or killing the X server with Ctrl+Alt+Backspace, it is recommended

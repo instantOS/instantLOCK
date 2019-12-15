@@ -15,10 +15,10 @@ static const int failonclear = 1;
 static const int monitortime = 5;
 
 /* default message */
-static const char * message = "Suckless: Software that sucks less.";
+static const char * message = "enter password";
 
 /* text color */
 static const char * text_color = "#ffffff";
 
 /* text size (must be a valid size) */
-static const char * font_name = "*courier-*-r*140*";
+static const char * font_name = "6x10";

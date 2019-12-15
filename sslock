@@ -1,2 +1,12 @@
 #!/bin/sh
-slock && xset -dpms
+
+if [ "$1" = "dmenu" ]; then
+    DADJOKE=$(echo "dont touch my computer" | dmenu)
+    shift
+else
+    (sleep 2 && curl -sH "Accept: text/plain" https://icanhazdadjoke.com/ |
+        sed 's/\? /\?\n/' | sed 's/\. /\.\n/' >~/.cache/dadjoke) &
+
+    DADJOKE="$(cat ~/.cache/dadjoke)"
+fi
+slock -m "${@:-$DADJOKE}" && xset -dpms

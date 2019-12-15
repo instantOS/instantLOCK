@@ -4,8 +4,8 @@ static const char *group = "nobody";
 
 static const char *colorname[NUMCOLS] = {
 	[INIT] = "black",	 /* after initialization */
-	[INPUT] = "#ff0000",  /* during input */
-	[FAILED] = "#0000ff", /* wrong password */
+	[INPUT] = "#007aff",  /* during input */
+	[FAILED] = "#ff3b30", /* wrong password */
 };
 
 /* treat a cleared input like a wrong password (color) */
@@ -21,4 +21,4 @@ static const char * message = "Suckless: Software that sucks less.";
 static const char * text_color = "#ffffff";
 
 /* text size (must be a valid size) */
-static const char * font_name = "6x10";
+static const char * font_name = "*courier-*-r*140*";

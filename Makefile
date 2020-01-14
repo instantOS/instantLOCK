@@ -47,9 +47,9 @@ install: all
 	@cp -f instantlock ${DESTDIR}${PREFIX}/bin
 	@chmod 755 ${DESTDIR}${PREFIX}/bin/instantlock
 	@chmod u+s ${DESTDIR}${PREFIX}/bin/instantlock
-	@cp -f sinstantlock ${DESTDIR}${PREFIX}/bin
-	@chmod 755 ${DESTDIR}${PREFIX}/bin/sinstantlock
-	@chmod u+s ${DESTDIR}${PREFIX}/bin/sinstantlock
+	@cp -f ilock ${DESTDIR}${PREFIX}/bin
+	@chmod 755 ${DESTDIR}${PREFIX}/bin/ilock
+	@chmod u+s ${DESTDIR}${PREFIX}/bin/ilock
 	@echo installing manual page to ${DESTDIR}${MANPREFIX}/man1
 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	@sed "s/VERSION/${VERSION}/g" <instantlock.1 >${DESTDIR}${MANPREFIX}/man1/instantlock.1

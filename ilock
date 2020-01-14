@@ -14,4 +14,4 @@ else
 fi
 
 # deacivate 5 second screen timeout after unlock
-slock -m "${@:-$DADJOKE}" && xset -dpms
+instantlock -m "${@:-$DADJOKE}" && xset -dpms

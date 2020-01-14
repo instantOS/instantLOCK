@@ -1,4 +1,6 @@
 slock.o
 slock
+instantlock
+instantlock.o
 config.h
 explicit_bzero.o

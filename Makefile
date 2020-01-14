@@ -1,15 +1,15 @@
-# slock - simple screen locker
+# instantlock - simple screen locker
 # See LICENSE file for copyright and license details.
 
 include config.mk
 
-SRC = slock.c ${COMPATSRC}
+SRC = instantlock.c ${COMPATSRC}
 OBJ = ${SRC:.c=.o}
 
-all: options slock
+all: options instantlock
 
 options:
-	@echo slock build options:
+	@echo instantlock build options:
 	@echo "CFLAGS   = ${CFLAGS}"
 	@echo "LDFLAGS  = ${LDFLAGS}"
 	@echo "CC       = ${CC}"
@@ -24,41 +24,41 @@ config.h:
 	@echo creating $@ from config.def.h
 	@cp config.def.h $@
 
-slock: ${OBJ}
+instantlock: ${OBJ}
 	@echo CC -o $@
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
 	@echo cleaning
-	@rm -f slock ${OBJ} slock-${VERSION}.tar.gz
+	@rm -f instantlock ${OBJ} instantlock-${VERSION}.tar.gz
 
 dist: clean
 	@echo creating dist tarball
-	@mkdir -p slock-${VERSION}
-	@cp -R LICENSE Makefile README slock.1 config.mk \
-		${SRC} explicit_bzero.c config.def.h arg.h util.h slock-${VERSION}
-	@tar -cf slock-${VERSION}.tar slock-${VERSION}
-	@gzip slock-${VERSION}.tar
-	@rm -rf slock-${VERSION}
+	@mkdir -p instantlock-${VERSION}
+	@cp -R LICENSE Makefile README instantlock.1 config.mk \
+		${SRC} explicit_bzero.c config.def.h arg.h util.h instantlock-${VERSION}
+	@tar -cf instantlock-${VERSION}.tar instantlock-${VERSION}
+	@gzip instantlock-${VERSION}.tar
+	@rm -rf instantlock-${VERSION}
 
 install: all
 	@echo installing executable file to ${DESTDIR}${PREFIX}/bin
 	@mkdir -p ${DESTDIR}${PREFIX}/bin
-	@cp -f slock ${DESTDIR}${PREFIX}/bin
-	@chmod 755 ${DESTDIR}${PREFIX}/bin/slock
-	@chmod u+s ${DESTDIR}${PREFIX}/bin/slock
-	@cp -f sslock ${DESTDIR}${PREFIX}/bin
-	@chmod 755 ${DESTDIR}${PREFIX}/bin/sslock
-	@chmod u+s ${DESTDIR}${PREFIX}/bin/sslock
+	@cp -f instantlock ${DESTDIR}${PREFIX}/bin
+	@chmod 755 ${DESTDIR}${PREFIX}/bin/instantlock
+	@chmod u+s ${DESTDIR}${PREFIX}/bin/instantlock
+	@cp -f sinstantlock ${DESTDIR}${PREFIX}/bin
+	@chmod 755 ${DESTDIR}${PREFIX}/bin/sinstantlock
+	@chmod u+s ${DESTDIR}${PREFIX}/bin/sinstantlock
 	@echo installing manual page to ${DESTDIR}${MANPREFIX}/man1
 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
-	@sed "s/VERSION/${VERSION}/g" <slock.1 >${DESTDIR}${MANPREFIX}/man1/slock.1
-	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/slock.1
+	@sed "s/VERSION/${VERSION}/g" <instantlock.1 >${DESTDIR}${MANPREFIX}/man1/instantlock.1
+	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/instantlock.1
 
 uninstall:
 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
-	@rm -f ${DESTDIR}${PREFIX}/bin/slock
+	@rm -f ${DESTDIR}${PREFIX}/bin/instantlock
 	@echo removing manual page from ${DESTDIR}${MANPREFIX}/man1
-	@rm -f ${DESTDIR}${MANPREFIX}/man1/slock.1
+	@rm -f ${DESTDIR}${MANPREFIX}/man1/instantlock.1
 
 .PHONY: all options clean dist install uninstall

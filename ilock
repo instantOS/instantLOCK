@@ -1,10 +1,14 @@
 #!/bin/sh
 
 # enter message manually
-if [ "$1" = "dmenu" ]; then
-    DADJOKE=$(echo "dont touch my computer" | dmenu)
+if [ "$1" = "message" ]; then
+    DADJOKE=$(echo "" | instantmenu -p "leave message")
     shift
-    [ -n "$DADJOKE" ] || exit
+    
+    if [ -z "$DADJOKE" ]; then
+        DADJOKE="locked, enter password for $(whoami)"
+    fi
+
 else
     # fetch random dad joke
     (sleep 2 && curl -sH "Accept: text/plain" https://icanhazdadjoke.com/ |

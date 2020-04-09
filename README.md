@@ -5,4 +5,21 @@
 </div>
 
 --------
+
+## Usage
+lock the screen and show a random dad joke
+```
+ilock
+```
+
+Pull up a menu to enter a message to leave on the locked screen
+```
+ilock message
+```
+
+## Installation
+instantLOCK is the default lockscreen for [instantOS](https://instantos.github.io)
+The message menu depends on [instantMENU](https://github.com/instantos/instantmenu)
+To compile it locally, clone the repo and run build.sh
+
 ### instantOS is still in early beta, contributions always welcome

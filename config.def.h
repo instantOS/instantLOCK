@@ -16,6 +16,7 @@ static const int monitortime = 5;
 
 /* default message */
 static const char * message = "enter password";
+static int onebutton = 0;
 
 /* text color */
 static const char * text_color = "#ffffff";

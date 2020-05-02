@@ -240,6 +240,9 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 
 	while (running && !XNextEvent(dpy, &ev)) {
 		if (ev.type == KeyPress) {
+			if (onebutton) {
+				running = 0;
+			}
 			explicit_bzero(&buf, sizeof(buf));
 			num = XLookupString(&ev.xkey, buf, sizeof(buf), &ksym, 0);
 			if (IsKeypadKey(ksym)) {
@@ -256,6 +259,10 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 				continue;
 			switch (ksym) {
 			case XK_Return:
+				if (onebutton) {
+					running = 0;
+					break;
+				}
 				passwd[len] = '\0';
 				errno = 0;
 				if (!(inputhash = crypt(passwd, hash)))
@@ -431,6 +438,10 @@ main(int argc, char **argv) {
 		return 0;
 	case 'm':
 		message = EARGF(usage());
+		break;
+	case 'o':
+		onebutton = 1;
+		message = "Press key to Unlock";
 		break;
 	case 'f':
 		if (!(dpy = XOpenDisplay(NULL)))

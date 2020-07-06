@@ -22,4 +22,4 @@ static int onebutton = 0;
 static const char * text_color = "#ffffff";
 
 /* text size (must be a valid size) */
-static const char * font_name = "6x10";
+static const char * font_name = "10x20";

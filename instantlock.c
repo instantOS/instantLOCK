@@ -228,8 +228,10 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 {
 	XRRScreenChangeNotifyEvent *rre;
 	char buf[32], passwd[256], *inputhash;
+	char tmpmessage[300] = "entering password :                       ";
 	int num, screen, running, failure, oldc;
 	unsigned int len, color;
+	int i;
 	KeySym ksym;
 	XEvent ev;
 
@@ -293,7 +295,15 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 				break;
 			}
 			color = len ? INPUT : ((failure || failonclear) ? FAILED : INIT);
-			if (running && oldc != color) {
+			if (color == INPUT) {
+				message = tmpmessage;
+				for (int i = 0; i < strlen(passwd); i++)
+				{
+					tmpmessage[i + 20] = '.';
+					tmpmessage[i + 21] = '\0';
+				}
+			}
+			if (running /* && oldc != color */) {
 				for (screen = 0; screen < nscreens; screen++) {
 					XSetWindowBackground(dpy,
 					                     locks[screen]->win,

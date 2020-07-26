@@ -1,20 +1,26 @@
 #!/bin/sh
 
-# enter message manually
-if [ "$1" = "message" ]; then
-    DADJOKE=$(echo "" | instantmenu -p "leave message")
-    shift
-    
-    if [ -z "$DADJOKE" ]; then
-        DADJOKE="locked, enter password for $(whoami)"
-    fi
+fetchjoke() {
+    curl -sH "Accept: text/plain" https://icanhazdadjoke.com/ |
+        sed 's/\? /\?\n/' | sed 's/\. /\.\n/' >~/.cache/dadjoke
+}
 
-else
+if iconf -i dadjoke; then
     # fetch random dad joke
-    (sleep 2 && curl -sH "Accept: text/plain" https://icanhazdadjoke.com/ |
-        sed 's/\? /\?\n/' | sed 's/\. /\.\n/' >~/.cache/dadjoke) &
+    if ! [ -e ~/.cache/dadjoke ]; then
+        fetchjoke
+    fi
+    (sleep 2 && fetchjoke &)
 
-    DADJOKE="$(cat ~/.cache/dadjoke)"
+    MESSAGE="$(cat ~/.cache/dadjoke)"
+elif [ "$1" = "message" ]; then
+    # manual message
+    MESSAGE=$(echo "" | instantmenu -p "leave message")
+    [ -z "$MESSAGE" ] && exit
+    shift
+else
+    # default
+    MESSAGE="locked, enter password for $(whoami)"
 fi
 
 # deacivate 5 second screen timeout after unlock

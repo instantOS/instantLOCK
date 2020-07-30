@@ -6,6 +6,8 @@ VERSION = 1.4
 # paths
 PREFIX = /usr
 MANPREFIX = ${PREFIX}/share/man
+DBUS_SERVICES_INSTALL_DIR = ${PREFIX}/share/dbus-1/services
+DBUS_INTERFACES_INSTALL_DIR = ${PREFIX}/share/dbus-1/interfaces
 
 X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib

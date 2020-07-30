@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.instantos.instantLOCK
+Exec=@Prefix@/bin/instantlock --dbus

@@ -11,6 +11,7 @@ all: options instantlock
 options:
 	@echo instantlock build options:
 	@echo "CFLAGS   = ${CFLAGS}"
+	@echo "CPPFLAGS   = ${CPPFLAGS}"
 	@echo "LDFLAGS  = ${LDFLAGS}"
 	@echo "CC       = ${CC}"
 
@@ -18,7 +19,7 @@ options:
 	@echo CC $<
 	@${CC} -c ${CFLAGS} $<
 
-${OBJ}: config.h config.mk arg.h util.h
+${OBJ}: config.h config.mk lock.h util.h
 
 config.h:
 	@echo creating $@ from config.def.h
@@ -36,7 +37,7 @@ dist: clean
 	@echo creating dist tarball
 	@mkdir -p instantlock-${VERSION}
 	@cp -R LICENSE Makefile README instantlock.1 config.mk \
-		${SRC} explicit_bzero.c config.def.h arg.h util.h instantlock-${VERSION}
+		${SRC} explicit_bzero.c config.def.h lock.h util.h instantlock-${VERSION}
 	@tar -cf instantlock-${VERSION}.tar instantlock-${VERSION}
 	@gzip instantlock-${VERSION}.tar
 	@rm -rf instantlock-${VERSION}

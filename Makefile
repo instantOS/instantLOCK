@@ -3,7 +3,7 @@
 
 include config.mk
 
-SRC = instantlock.c ${COMPATSRC}
+SRC = instantlock.c dbusadapter.c ${COMPATSRC}
 OBJ = ${SRC:.c=.o}
 
 all: options instantlock

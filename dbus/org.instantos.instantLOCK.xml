@@ -16,6 +16,11 @@
                     <doc:summary>The message to print.</doc:summary>
                 </doc:doc>
             </arg>
+            <arg name="oneKey" direction="in" type="b">
+                <doc:doc>
+                    <doc:summary>Press any key to unlock.</doc:summary>
+                </doc:doc>
+            </arg>
             <doc:doc>
                 <doc:description>
                     <doc:para>Locks the screen.</doc:para>

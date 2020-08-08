@@ -10,13 +10,15 @@ DBUS_SERVICES_INSTALL_DIR = ${PREFIX}/share/dbus-1/services
 DBUS_INTERFACES_INSTALL_DIR = ${PREFIX}/share/dbus-1/interfaces
 ARGTABLE3_INCLUDE_DIR = ${PREFIX}/usr/include
 ARGTABLE3_LIB_DIR = ${PREFIX}/usr/lib
+GLIB2_CFLAGS = `pkg-config --cflags glib-2.0` `pkg-config --cflags gio-unix-2.0`
+GLIB2_LDFLAGS = `pkg-config --libs glib-2.0` `pkg-config --libs gio-unix-2.0`
 
 X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib
 
 # includes and libs
-INCS = -I. -I/usr/include -I${X11INC} -I${ARGTABLE3_INCLUDE_DIR}
-LIBS = -L/usr/lib -lc -lcrypt -L${X11LIB} -L${ARGTABLE3_LIB_DIR} -lX11 -lXext -lXrandr -lXinerama -largtable3
+INCS = -I. -I/usr/include -I${X11INC} -I${ARGTABLE3_INCLUDE_DIR} ${GLIB2_CFLAGS}
+LIBS = -L/usr/lib -lc -lcrypt -L${X11LIB} -L${ARGTABLE3_LIB_DIR} ${GLIB2_LDFLAGS} -lX11 -lXext -lXrandr -lXinerama -largtable3
 
 # flags
 CPPFLAGS += -DVERSION=\"${VERSION}\" -D_DEFAULT_SOURCE -DHAVE_SHADOW_H

@@ -4,6 +4,7 @@
 #include <argtable3.h>
 
 #include "lock.h"
+#include "dbusadapter.h"
 
 int
 main(int argc, char **argv) {
@@ -13,7 +14,7 @@ main(int argc, char **argv) {
 	int oneButton = onebutton;
 	int runCommand = 0;
 	const char* lock_message = message;
-	struct arg_lit *help, *version, *fonts, *anyKey;
+	struct arg_lit *help, *version, *fonts, *anyKey, *dbus;
 	struct arg_str *message, *command;
 	struct arg_end *end;
 
@@ -23,6 +24,7 @@ main(int argc, char **argv) {
 		version		= arg_litn("v", "version", 0, 1, "print instantlock version"),
 		fonts		= arg_litn("f", "fonts", 0, 1, "list available fonts"),
 		anyKey		= arg_litn("o", NULL, 0, 1, "press any key"),
+		dbus		= arg_litn("d", "dbus", 0, 1, "run the dbus service"),
 		message		= arg_str0("m", "message", "MESSAGE", "display the specified message"),
 		command		= arg_strn(NULL, NULL, "COMMAND [ARGS ...]",0,argc+2,NULL),
 		end			= arg_end(20)
@@ -93,6 +95,12 @@ main(int argc, char **argv) {
 		exitcode = 0;
 		goto exit;
 	}
+	if (dbus->count > 0) {
+		dbus_listen();
+		exitcode = 0;
+		goto exit;
+	}
+
 	if (command->count > 0) {
 		runCommand = 1;
 	}

@@ -31,7 +31,7 @@
 char *argv0;
 
 /* global count to prevent repeated error messages */
-int count_error = 0;
+static int count_error = 0;
 
 enum {
 	INIT,

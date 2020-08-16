@@ -8,6 +8,7 @@ PREFIX = /usr
 MANPREFIX = ${PREFIX}/share/man
 DBUS_SERVICES_INSTALL_DIR = ${PREFIX}/share/dbus-1/services
 DBUS_INTERFACES_INSTALL_DIR = ${PREFIX}/share/dbus-1/interfaces
+DBUS_CONFIG_INSTALL_DIR = ${PREFIX}/etc/dbus-1/system.d
 ARGTABLE3_INCLUDE_DIR = ${PREFIX}/usr/include
 ARGTABLE3_LIB_DIR = ${PREFIX}/usr/lib
 GLIB2_CFLAGS = `pkg-config --cflags glib-2.0` `pkg-config --cflags gio-unix-2.0`

@@ -55,9 +55,10 @@ install: all
 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	@sed "s/VERSION/${VERSION}/g" <instantlock.1 >${DESTDIR}${MANPREFIX}/man1/instantlock.1
 	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/instantlock.1
-	@echo installing dbus service and interface to ${DESTDIR}${DBUS_SERVICES_INSTALL_DIR}
+	@echo installing dbus service, interface and config
 	@install -Dm 644 dbus/org.instantos.instantlock.service ${DESTDIR}${DBUS_SERVICES_INSTALL_DIR}/org.instantos.instantlock.service
 	@install -Dm 644 dbus/org.instantos.instantLOCK.xml ${DESTDIR}${DBUS_INTERFACES_INSTALL_DIR}/org.instantos.instantLOCK.xml
+	@install -Dm 644 dbus/instantlock-dbus.conf ${DESTDIR}${DBUS_CONFIG_INSTALL_DIR}/instantlock-dbus.conf
 
 uninstall:
 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
@@ -67,5 +68,6 @@ uninstall:
 	@echo uninstalling dbus service and interface from ${DESTDIR}${DBUS_SERVICES_INSTALL_DIR}
 	@rm -f ${DESTDIR}${DBUS_SERVICES_INSTALL_DIR}/org.instantos.instantlock.service
 	@rm -f ${DESTDIR}${DBUS_INTERFACES_INSTALL_DIR}/org.instantos.instantLOCK.xml
+	@rm -f ${DESTDIR}${DBUS_CONFIG_INSTALL_DIR}/instantlock-dbus.conf
 
 .PHONY: all options clean dist install uninstall

@@ -1,3 +1,6 @@
+#ifndef CONFIG_DEF_H
+#define CONFIG_DEF_H
+
 /* user and group to drop privileges to */
 static const char *user = "nobody";
 static const char *group = "nobody";
@@ -23,3 +26,5 @@ static const char * text_color = "#ffffff";
 
 /* text size (must be a valid size) */
 static const char * font_name = "10x20";
+
+#endif //CONFIG_DEF_H

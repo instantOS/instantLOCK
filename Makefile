@@ -3,7 +3,7 @@
 
 include config.mk
 
-SRC = instantlock.c ${COMPATSRC}
+SRC = instantlock.c dbusadapter.c ${COMPATSRC}
 OBJ = ${SRC:.c=.o}
 
 all: options instantlock
@@ -11,6 +11,7 @@ all: options instantlock
 options:
 	@echo instantlock build options:
 	@echo "CFLAGS   = ${CFLAGS}"
+	@echo "CPPFLAGS   = ${CPPFLAGS}"
 	@echo "LDFLAGS  = ${LDFLAGS}"
 	@echo "CC       = ${CC}"
 
@@ -18,7 +19,7 @@ options:
 	@echo CC $<
 	@${CC} -c ${CFLAGS} $<
 
-${OBJ}: config.h config.mk arg.h util.h
+${OBJ}: config.h config.mk lock.h util.h
 
 config.h:
 	@echo creating $@ from config.def.h
@@ -36,7 +37,7 @@ dist: clean
 	@echo creating dist tarball
 	@mkdir -p instantlock-${VERSION}
 	@cp -R LICENSE Makefile README instantlock.1 config.mk \
-		${SRC} explicit_bzero.c config.def.h arg.h util.h instantlock-${VERSION}
+		${SRC} explicit_bzero.c config.def.h lock.h util.h instantlock-${VERSION}
 	@tar -cf instantlock-${VERSION}.tar instantlock-${VERSION}
 	@gzip instantlock-${VERSION}.tar
 	@rm -rf instantlock-${VERSION}
@@ -54,11 +55,19 @@ install: all
 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	@sed "s/VERSION/${VERSION}/g" <instantlock.1 >${DESTDIR}${MANPREFIX}/man1/instantlock.1
 	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/instantlock.1
+	@echo installing dbus service, interface and config
+	@install -Dm 644 dbus/org.instantos.instantlock.service ${DESTDIR}${DBUS_SERVICES_INSTALL_DIR}/org.instantos.instantlock.service
+	@install -Dm 644 dbus/org.instantos.instantLOCK.xml ${DESTDIR}${DBUS_INTERFACES_INSTALL_DIR}/org.instantos.instantLOCK.xml
+	@install -Dm 644 dbus/instantlock-dbus.conf ${DESTDIR}${DBUS_CONFIG_INSTALL_DIR}/instantlock-dbus.conf
 
 uninstall:
 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
 	@rm -f ${DESTDIR}${PREFIX}/bin/instantlock
 	@echo removing manual page from ${DESTDIR}${MANPREFIX}/man1
 	@rm -f ${DESTDIR}${MANPREFIX}/man1/instantlock.1
+	@echo uninstalling dbus service and interface from ${DESTDIR}${DBUS_SERVICES_INSTALL_DIR}
+	@rm -f ${DESTDIR}${DBUS_SERVICES_INSTALL_DIR}/org.instantos.instantlock.service
+	@rm -f ${DESTDIR}${DBUS_INTERFACES_INSTALL_DIR}/org.instantos.instantLOCK.xml
+	@rm -f ${DESTDIR}${DBUS_CONFIG_INSTALL_DIR}/instantlock-dbus.conf
 
 .PHONY: all options clean dist install uninstall

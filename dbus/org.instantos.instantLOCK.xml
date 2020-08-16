@@ -1,0 +1,46 @@
+<!DOCTYPE node PUBLIC
+    "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+    "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+
+<!--
+    This file contains the definition for the org.instantos.instantLOCK D-Bus interface.
+    Originally written by Scott Hamilton <sgn.hamilton+dbus@protonmail.com>. It may be copied
+    freely and modified as needed.
+-->
+
+<node xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+    <interface name="org.instantos.instantLOCK">
+        <method name="Lock">
+            <arg name="message" direction="in" type="s">
+                <doc:doc>
+                    <doc:summary>The message to print.</doc:summary>
+                </doc:doc>
+            </arg>
+            <arg name="oneKey" direction="in" type="b">
+                <doc:doc>
+                    <doc:summary>Press any key to unlock.</doc:summary>
+                </doc:doc>
+            </arg>
+            <doc:doc>
+                <doc:description>
+                    <doc:para>Locks the screen.</doc:para>
+                </doc:description>
+            </doc:doc>
+        </method>
+	
+        <signal name="Locked">
+            <doc:doc>
+                <doc:description>
+                    <doc:para>Emitted if the user locked the screen.</doc:para>
+                </doc:description>
+            </doc:doc>
+        </signal>
+        <signal name="Unlocked">
+            <doc:doc>
+                <doc:description>
+                    <doc:para>Emitted if the user successfully unlocked the screen.</doc:para>
+                </doc:description>
+            </doc:doc>
+        </signal>
+    </interface>
+</node>

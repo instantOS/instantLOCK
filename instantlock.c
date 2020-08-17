@@ -283,8 +283,11 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 				len = 0;
 				break;
 			case XK_BackSpace:
-				if (len)
+				if (len) {
 					passwd[--len] = '\0';
+                }
+                if (len == 1 || len == 0)
+                    tmpmessage[20] = ' ';
 				break;
 			default:
 				if (num && !iscntrl((int)buf[0]) &&
@@ -297,11 +300,16 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 			color = len ? INPUT : ((failure || failonclear) ? FAILED : INIT);
 			if (color == INPUT) {
 				message = tmpmessage;
-				for (int i = 0; i < strlen(passwd); i++)
-				{
-					tmpmessage[i + 20] = '.';
-					tmpmessage[i + 21] = '\0';
-				}
+                if (len == 0 || color == FAILED) {
+					tmpmessage[20] = ' ';
+					tmpmessage[21] = '\0';
+                } else {
+                    for (int i = 0; i < len; i++)
+                    {
+                        tmpmessage[i + 20] = '.';
+                        tmpmessage[i + 21] = '\0';
+                    }
+                }
 			}
 			if (running /* && oldc != color */) {
 				for (screen = 0; screen < nscreens; screen++) {

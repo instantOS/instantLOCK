@@ -15,7 +15,7 @@ if iconf -i dadjoke; then
     MESSAGE="$(cat ~/.cache/dadjoke)"
 elif [ "$1" = "message" ]; then
     # manual message
-    MESSAGE=$(echo "" | instantmenu -p "leave message")
+    MESSAGE="$(imenu -i "enter lock screen message")"
     [ -z "$MESSAGE" ] && exit
     shift
 else
@@ -24,4 +24,8 @@ else
 fi
 
 # deacivate 5 second screen timeout after unlock
-instantlock -m "${@:-$MESSAGE}" && xset -dpms
+if ! iconf -i nolocktimeout; then
+    instantlock -m "${@:-$MESSAGE}" && xset -dpms
+else
+    instantlock -m "${@:-$MESSAGE}"
+fi

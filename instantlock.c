@@ -29,6 +29,7 @@ char *argv0;
 
 /* global count to prevent repeated error messages */
 int count_error = 0;
+int dpmsactive = 1;
 
 enum {
 	INIT,
@@ -457,6 +458,9 @@ main(int argc, char **argv) {
 	case 'm':
 		message = EARGF(usage());
 		break;
+	case 'd':
+        dpmsactive = 0;
+		break;
 	case 'o':
 		onebutton = 1;
 		message = "Press key to Unlock";
@@ -526,19 +530,21 @@ main(int argc, char **argv) {
 	if (nlocks != nscreens)
 		return 1;
 
-	/* DPMS-magic to disable the monitor */
-	if (!DPMSCapable(dpy))
-		die("instantlock: DPMSCapable failed\n");
-	if (!DPMSEnable(dpy))
-		die("instantlock: DPMSEnable failed\n");
-	if (!DPMSGetTimeouts(dpy, &standby, &suspend, &off))
-		die("instantlock: DPMSGetTimeouts failed\n");
-	if (!standby || !suspend || !off)
-		/* set values if there arent some */
-		standby = suspend = off = 300;
+    if (dpmsactive) {
+        /* DPMS-magic to disable the monitor */
+        if (!DPMSCapable(dpy))
+            die("instantlock: DPMSCapable failed\n");
+        if (!DPMSEnable(dpy))
+            die("instantlock: DPMSEnable failed\n");
+        if (!DPMSGetTimeouts(dpy, &standby, &suspend, &off))
+            die("instantlock: DPMSGetTimeouts failed\n");
+        if (!standby || !suspend || !off)
+            /* set values if there arent some */
+            standby = suspend = off = 300;
 
-	DPMSSetTimeouts(dpy, monitortime, monitortime, monitortime);
-	XFlush(dpy);
+        DPMSSetTimeouts(dpy, monitortime, monitortime, monitortime);
+        XFlush(dpy);
+    }
 
 	/* run post-lock command */
 	if (argc > 0) {
@@ -546,7 +552,8 @@ main(int argc, char **argv) {
 		case -1:
 			die("instantlock: fork failed: %s\n", strerror(errno));
 		case 0:
-			monitorreset(dpy, standby, suspend, off);
+            if (dpmsactive)
+                monitorreset(dpy, standby, suspend, off);
 
 			if (close(ConnectionNumber(dpy)) < 0)
 				die("instantlock: close: %s\n", strerror(errno));
@@ -560,7 +567,8 @@ main(int argc, char **argv) {
 	readpw(dpy, &rr, locks, nscreens, hash);
 
 	/* reset DPMS values to inital ones */
-	monitorreset(dpy, standby, suspend, off);
+    if (dpmsactive)
+        monitorreset(dpy, standby, suspend, off);
 
 	return 0;
 }

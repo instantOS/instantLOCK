@@ -27,5 +27,6 @@ fi
 if ! iconf -i nolocktimeout; then
     instantlock -m "${@:-$MESSAGE}" && xset -dpms
 else
-    instantlock -m "${@:-$MESSAGE}"
+    echo "keeping screen active"
+    instantlock -d -m "${@:-$MESSAGE}"
 fi

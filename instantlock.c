@@ -230,6 +230,7 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 	XRRScreenChangeNotifyEvent *rre;
 	char buf[32], passwd[256], *inputhash;
 	char tmpmessage[300] = "entering password :                       ";
+	char defaultmessage[300] = "entering password :                       ";
 	int num, screen, running, failure, oldc;
 	unsigned int len, color;
 	int i;
@@ -301,9 +302,9 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 			color = len ? INPUT : ((failure || failonclear) ? FAILED : INIT);
 			if (color == INPUT) {
 				message = tmpmessage;
-                if (len == 0 || color == FAILED) {
-					tmpmessage[20] = ' ';
-					tmpmessage[21] = '\0';
+                if (len == 0 || failure) {
+                    strcpy(tmpmessage, defaultmessage);
+                    failure = 0;
                 } else {
                     for (int i = 0; i < len; i++)
                     {

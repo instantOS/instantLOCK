@@ -167,6 +167,8 @@ writemessage(Display *dpy, Window win, int screen)
 			}
 
 			XDrawString(dpy, win, gc, width + tab_size*tab_replace, height + 20*k, message + j, i - j);
+            if (breakin)
+                XDrawString(dpy, win, gc, (s_width - XTextWidth(fontinfo, breakmessage, strlen(breakmessage))) / 2, s_height * 19 / 20, breakmessage, strlen(breakmessage));
 			while (i < len && message[i] == '\n') {
 				i++;
 				j = i;
@@ -276,6 +278,7 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 				if (running) {
 					XBell(dpy, 100);
 					failure = 1;
+                    breakin = 1;
 				}
 				explicit_bzero(&passwd, sizeof(passwd));
 				len = 0;

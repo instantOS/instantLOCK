@@ -16,6 +16,8 @@ static const int monitortime = 5;
 
 /* default message */
 static const char * message = "enter password";
+static const char * breakmessage = "someone tried and failed to unlock your computer";
+static int breakin = 0;
 static int onebutton = 0;
 
 /* text color */

@@ -1,4 +1,5 @@
 /* See LICENSE file for license details. */
+#include <X11/X.h>
 #define _XOPEN_SOURCE 500
 #if HAVE_SHADOW_H
 #include <shadow.h>
@@ -263,6 +264,17 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 			    IsPFKey(ksym) ||
 			    IsPrivateKeypadKey(ksym))
 				continue;
+
+            if (ev.xkey.state & ControlMask) {
+                int i;
+                int tmplen=len;
+                switch (ksym) {
+                    case XK_u:
+                        len=0;
+                        strcpy(tmpmessage, defaultmessage);
+                        break;
+                }
+            }
 			switch (ksym) {
 			case XK_Return:
 				if (onebutton) {

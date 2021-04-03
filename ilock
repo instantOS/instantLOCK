@@ -23,10 +23,18 @@ else
     MESSAGE="locked, enter password for $(whoami)"
 fi
 
-# deacivate 5 second screen timeout after unlock
-if ! iconf -i nolocktimeout; then
-    instantlock -m "${@:-$MESSAGE}" && xset -dpms
+if [ "$1" = '-o' ]; then
+    if iconf -i nolocktimeout; then
+        echo "keeping screen active"
+        instantlock -o -d
+    else
+        instantlock -o && xset -dpms
+    fi
 else
-    echo "keeping screen active"
-    instantlock -d -m "${@:-$MESSAGE}"
+    if ! iconf -i nolocktimeout; then
+        instantlock -m "${@:-$MESSAGE}" && xset -dpms
+    else
+        echo "keeping screen active"
+        instantlock -d -m "${@:-$MESSAGE}"
+    fi
 fi

@@ -474,7 +474,7 @@ main(int argc, char **argv) {
 	case 'm':
 		message = EARGF(usage());
 		break;
-	case 'd':
+	case 'd': // disable screen turning off
         dpmsactive = 0;
 		break;
 	case 'o':

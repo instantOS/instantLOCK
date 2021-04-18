@@ -7,7 +7,7 @@
 --------
 
 ## Usage
-lock the screen and show a random dad joke
+lock the screen and show a random dad joke or default message (depends on setting)
 ```
 ilock
 ```

@@ -23,7 +23,7 @@ else
     MESSAGE="locked, enter password for $(whoami)"
 fi
 
-if [ "$1" = '-o' ]; then
+if [ "$1" = '-o' ] || [ -n "$ILOCKACTIVE" ]; then
     if iconf -i nolocktimeout; then
         echo "keeping screen active"
         instantlock -o -d

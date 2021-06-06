@@ -479,7 +479,7 @@ main(int argc, char **argv) {
 		break;
 	case 'o':
 		onebutton = 1;
-		message = "Press key to Unlock";
+		message = "Press any key to Unlock";
 		break;
 	case 'f':
 		if (!(dpy = XOpenDisplay(NULL)))

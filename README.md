@@ -29,3 +29,20 @@ The message menu depends on [instantMENU](https://github.com/instantos/instantme
 To compile it locally, clone the repo and run build.sh
 
 ### instantOS is still in early beta, contributions always welcome
+
+## Features
+
+instantLOCK is a fork of [slock](https://tools.suckless.org/slock/) with some added features that make it more usable to a "normal" computer user
+The added features include
+
+- Dot indicators when typing the password
+- A warning message if someone tried (and failed) to unlock the screen
+- Option to unlock screen without a password
+- ilock wrapper
+- Dad jokes
+
+Some features are also based on suckless patches and work pretty much the same
+
+- Message
+- Xresources
+- Ctrl + U to clear

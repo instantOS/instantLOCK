@@ -6,59 +6,49 @@ include config.mk
 SRC = instantlock.c ${COMPATSRC}
 OBJ = ${SRC:.c=.o}
 
-all: options instantlock
+all: instantlock
 
-options:
-	@echo instantlock build options:
-	@echo "CFLAGS   = ${CFLAGS}"
-	@echo "LDFLAGS  = ${LDFLAGS}"
-	@echo "CC       = ${CC}"
 
 .c.o:
-	@echo CC $<
-	@${CC} -c ${CFLAGS} $<
+	${CC} -c ${CFLAGS} $<
+
 
 ${OBJ}: config.h config.mk arg.h util.h
 
 config.h:
-	@echo creating $@ from config.def.h
-	@cp config.def.h $@
+	cp config.def.h $@
+
 
 instantlock: ${OBJ}
-	@echo CC -o $@
-	@${CC} -o $@ ${OBJ} ${LDFLAGS}
+	${CC} -o $@ ${OBJ} ${LDFLAGS}
+
 
 clean:
-	@echo cleaning
-	@rm -f instantlock ${OBJ} instantlock-${VERSION}.tar.gz
+	rm -f instantlock ${OBJ} instantlock-${VERSION}.tar.gz
+
 
 dist: clean
-	@echo creating dist tarball
-	@mkdir -p instantlock-${VERSION}
-	@cp -R LICENSE Makefile README instantlock.1 config.mk \
-		${SRC} explicit_bzero.c config.def.h arg.h util.h instantlock-${VERSION}
-	@tar -cf instantlock-${VERSION}.tar instantlock-${VERSION}
-	@gzip instantlock-${VERSION}.tar
-	@rm -rf instantlock-${VERSION}
+	mkdir -p instantlock-${VERSION}
+	cp -R LICENSE Makefile README instantlock.1 config.mk \
+		${SRC} config.def.h arg.h util.h instantlock-${VERSION}
+	tar -cf instantlock-${VERSION}.tar instantlock-${VERSION}
+	gzip instantlock-${VERSION}.tar
+	rm -rf instantlock-${VERSION}
 
 install: all
-	@echo installing executable file to ${DESTDIR}${PREFIX}/bin
-	@mkdir -p ${DESTDIR}${PREFIX}/bin
-	@cp -f instantlock ${DESTDIR}${PREFIX}/bin
-	@chmod 755 ${DESTDIR}${PREFIX}/bin/instantlock
-	@chmod u+s ${DESTDIR}${PREFIX}/bin/instantlock
-	@cp -f ilock ${DESTDIR}${PREFIX}/bin
-	@chmod 755 ${DESTDIR}${PREFIX}/bin/ilock
-	@chmod u+s ${DESTDIR}${PREFIX}/bin/ilock
-	@echo installing manual page to ${DESTDIR}${MANPREFIX}/man1
-	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
-	@sed "s/VERSION/${VERSION}/g" <instantlock.1 >${DESTDIR}${MANPREFIX}/man1/instantlock.1
-	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/instantlock.1
+	mkdir -p ${DESTDIR}${PREFIX}/bin
+	cp -f instantlock ${DESTDIR}${PREFIX}/bin
+	chmod 755 ${DESTDIR}${PREFIX}/bin/instantlock
+	chmod u+s ${DESTDIR}${PREFIX}/bin/instantlock
+	cp -f ilock ${DESTDIR}${PREFIX}/bin
+	chmod 755 ${DESTDIR}${PREFIX}/bin/ilock
+	chmod u+s ${DESTDIR}${PREFIX}/bin/ilock
+	mkdir -p ${DESTDIR}${MANPREFIX}/man1
+	sed "s/VERSION/${VERSION}/g" <instantlock.1 >${DESTDIR}${MANPREFIX}/man1/instantlock.1
+	chmod 644 ${DESTDIR}${MANPREFIX}/man1/instantlock.1
 
 uninstall:
-	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
-	@rm -f ${DESTDIR}${PREFIX}/bin/instantlock
-	@echo removing manual page from ${DESTDIR}${MANPREFIX}/man1
-	@rm -f ${DESTDIR}${MANPREFIX}/man1/instantlock.1
+	rm -f ${DESTDIR}${PREFIX}/bin/instantlock
+	rm -f ${DESTDIR}${MANPREFIX}/man1/instantlock.1
 
-.PHONY: all options clean dist install uninstall
+.PHONY: all clean dist install uninstall

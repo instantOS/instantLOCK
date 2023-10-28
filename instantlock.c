@@ -469,7 +469,7 @@ main(int argc, char **argv) {
 
 	ARGBEGIN {
 	case 'v':
-		fprintf(stderr, "instantlock-"VERSION"\n");
+        puts("instantlock-"VERSION);
 		return 0;
 	case 'm':
 		message = EARGF(usage());

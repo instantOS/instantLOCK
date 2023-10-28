@@ -5,3 +5,4 @@ instantlock
 instantlock.o
 config.h
 explicit_bzero.o
+.ccls-cache

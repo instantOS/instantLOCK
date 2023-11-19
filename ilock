@@ -1,26 +1,34 @@
 #!/bin/sh
-
 fetchjoke() {
     curl -sH "Accept: text/plain" https://icanhazdadjoke.com/ |
         sed 's/\? /\?\n/' | sed 's/\. /\.\n/' >~/.cache/dadjoke
 }
 
-if iconf -i dadjoke; then
-    # fetch random dad joke
-    if ! [ -e ~/.cache/dadjoke ]; then
-        fetchjoke
-    fi
-    (sleep 2 && fetchjoke &)
-
-    MESSAGE="$(cat ~/.cache/dadjoke)"
-elif [ "$1" = "message" ]; then
+if [ "$1" = "message" ]; then
     # manual message
-    MESSAGE="$(imenu -i "enter lock screen message")"
-    [ -z "$MESSAGE" ] && exit
-    shift
+    if [ -z "$2" ]; then
+        MESSAGE="$(imenu -i "enter lock screen message")"
+        [ -z "$MESSAGE" ] && exit
+        shift
+    else
+        MESSAGE=$2
+        if [ "$MESSAGE" == "null" ]; then
+            MESSAGE=""
+            shift
+        fi
+        shift
+    fi
 else
-    # default
-    MESSAGE="locked, enter password for $(whoami)"
+    if iconf -i dadjoke; then
+        # fetch random dad joke
+        if ! [ -e ~/.cache/dadjoke ]; then
+            fetchjoke
+        fi
+        (sleep 2 && fetchjoke &)
+        MESSAGE="$(cat ~/.cache/dadjoke)"
+    else
+        MESSAGE="locked, enter password for $(whoami)"
+    fi
 fi
 
 if [ "$1" = '-o' ] || [ -n "$ILOCKACTIVE" ]; then
